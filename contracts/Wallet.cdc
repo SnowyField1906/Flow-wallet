@@ -72,11 +72,13 @@ access(all) contract Wallet {
     }
 
     view access(self) fun _downcastSignatureAlgorithm(signatureAlgorithm: SignatureAlgorithm): SignAlgo {
-        let signAlgo: SignAlgo = SignAlgo(rawValue: signatureAlgorithm.rawValue)!
+        let signAlgo: SignAlgo = SignAlgo(rawValue: signatureAlgorithm.rawValue - 1)
+            ?? panic("Wallet: unsupported signature algorithm")
         return signAlgo
     }
     view access(self) fun _downcastHashAlgorithm(hashAlgorithm: HashAlgorithm): HashAlgo {
-        let hashAlgo: HashAlgo = HashAlgo(rawValue: hashAlgorithm.rawValue)!
+        let hashAlgo: HashAlgo = HashAlgo(rawValue: hashAlgorithm.rawValue - 1)
+            ?? panic("Wallet: unsupported hash algorithm")
         return hashAlgo
     }
     view access(self) fun _downcastPubicKey(publicKey: PublicKey): PubKey {
