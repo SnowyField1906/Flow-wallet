@@ -1,9 +1,9 @@
 ## Create account
 ### Arguments:
 ```js
-publicKey: String,
-signatureAlgorithm: UInt8,
-hashAlgorithm: UInt8,
+publicKey: String
+signatureAlgorithm: UInt8
+hashAlgorithm: UInt8
 creationFee: UFix64
 ```
 - `publicKey`: Public key of the account as a hexadecimal string
@@ -48,10 +48,9 @@ flow transactions send './transactions/1. Create Account.cdc' \
 ## Get accounts
 ### Arguments:
 ```js
-publicKey: String,
-signatureAlgorithm: UInt8,
-hashAlgorithm: UInt8,
-creationFee: UFix64
+publicKey: String
+signatureAlgorithm: UInt8
+hashAlgorithm: UInt8
 ```
 - `publicKey`: Public key of the account as a hexadecimal string
 - `signatureAlgorithm`: Signature algorithm for `PublicKey` as raw data
