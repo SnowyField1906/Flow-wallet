@@ -5,12 +5,13 @@ flow accounts create
 ```
 > [Flow faucet](https://testnet-faucet-v2.onflow.org/fund-account)
 
-## 2 .Change the `testnet-account` key in [this file](./flow.json) to your account name you have set.
+## 2 .Change the `testnet-account` key in [this file](./flow.json) to the account name you have set.
 ## 3. Deploy contracts
 ```bash
 flow project deploy --network testnet
 ```
 # II. Transactions and Scripts
+> ⚠️ Assuming your account name is `testnet-account`.
 ## 1. Create Account
 ### 1.1. Arguments:
 ```js
