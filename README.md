@@ -1,5 +1,18 @@
-## Create account
-### Arguments:
+# I. Setup
+## 1. Create a new testnet account with [Flow CLI](https://docs.onflow.org/flow-cli/install/)
+```bash
+flow accounts create
+```
+> [Flow faucet](https://testnet-faucet-v2.onflow.org/fund-account)
+
+## 2 .Change the `testnet-account` key in [this file](./flow.json) to your account name you have set.
+## 3. Deploy contracts
+```bash
+flow project deploy --network testnet
+```
+# II. Transactions and Scripts
+## 1. Create Account
+### 1.1. Arguments:
 ```js
 publicKey: String
 signatureAlgorithm: UInt8
@@ -32,7 +45,7 @@ creationFee: UFix64
 > Thus, it would be increased/decreased by 1 in code's logic to avoid mismatching for `Factory.Key`.
 - `creationFee`: Creation fee for the account, minimum is `0.001` FLOW
 > **Read more**: [FAQ - Why is there an account minimum balance?](https://developers.flow.com/concepts/start-here/storage#storage-parameters)
-### Flow-CLI command line:
+### 1.2. Flow-CLI command line:
 ```bash
 flow transactions send './transactions/1. Create Account.cdc' \
 --signer testnet-account \
@@ -45,8 +58,8 @@ flow transactions send './transactions/1. Create Account.cdc' \
 ]'
 ```
 
-## Get accounts
-### Arguments:
+## 2. Get Accounts
+### 2.1. Arguments:
 ```js
 publicKey: String
 signatureAlgorithm: UInt8
@@ -76,7 +89,7 @@ hashAlgorithm: UInt8
 
 > **Note**: New Cadence `enum` type has raw data starting from `0` instead of `1`. \
 > Thus, it would be increased/decreased by 1 in code's logic to avoid mismatching for `Factory.Key`.
-### Flow-CLI command line:
+### 2.2. Flow-CLI command line:
 ```bash
 flow scripts execute './scripts/1. Get Accounts.cdc' \
 --network testnet \
