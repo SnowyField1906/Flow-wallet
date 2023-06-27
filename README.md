@@ -1,12 +1,27 @@
 # I. Setup
-## 1. Create a new testnet account with [Flow CLI](https://docs.onflow.org/flow-cli/install/)
+## 1. Install Flow CLI
+### MacOS
+```bash
+brew install flow-cli
+```
+### Linux
+```powershell
+sh -ci "$(curl -fsSL https://raw.githubusercontent.com/onflow/flow-cli/master/install.sh)"
+```
+### Windows
+```powershell
+iex "& { $(irm 'https://raw.githubusercontent.com/onflow/flow-cli/master/install.ps1') }"
+```
+## 2. Create account
+Do the following command and follow the instructions:
 ```bash
 flow accounts create
 ```
 > [Flow faucet](https://testnet-faucet-v2.onflow.org/fund-account)
 
-## 2 .Change the `testnet-account` key in [this file](./flow.json) to the account name you have set.
-## 3. Deploy contracts
+## 3. Config Flow project
+Change the `testnet-account` key in [this file](./flow.json) to the account name you have set.
+## 4. Deploy contracts
 ```bash
 flow project deploy --network testnet
 ```
