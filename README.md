@@ -11,7 +11,7 @@ flow transactions send './transactions/1. Create Account.cdc' \
 ]'
 ```
 
-#### Get Key
+#### Get accounts
 ```bash
 flow scripts execute './scripts/1. Get Accounts.cdc' \
 --network testnet \
