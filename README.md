@@ -29,7 +29,7 @@ creationFee: UFix64
 | BLS_BLS12_381 | 3 |
 
 > **Note**: New Cadence `enum` type has raw data starting from `0` instead of `1`. \
-> Thus, it would be increased/decreased by 1 in code's logic to avoid mismatching for `Factory.PubKey`.
+> Thus, it would be increased/decreased by 1 in the code logic to avoid mismatching for `Factory.PubKey`.
 - `hashAlgorithm`: Hash algorithm for `AccountKey` as raw data
 
 | Algorithm | Raw data |
@@ -42,7 +42,7 @@ creationFee: UFix64
 | KECCAK_256 | 6 |
 
 > **Note**: New Cadence `enum` type has raw data starting from `0` instead of `1`. \
-> Thus, it would be increased/decreased by 1 in code's logic to avoid mismatching for `Factory.Key`.
+> Thus, it would be increased/decreased by 1 in the code logic to avoid mismatching for `Factory.Key`.
 - `creationFee`: Creation fee for the account, minimum is `0.001` FLOW
 > **Read more**: [FAQ - Why is there an account minimum balance?](https://developers.flow.com/concepts/start-here/storage#storage-parameters)
 ### 1.2. Flow-CLI command line:
@@ -75,7 +75,7 @@ hashAlgorithm: UInt8
 | BLS_BLS12_381 | 3 |
 
 > **Note**: New Cadence `enum` type has raw data starting from `0` instead of `1`. \
-> Thus, it would be increased/decreased by 1 in code's logic to avoid mismatching for `Factory.PubKey`.
+> Thus, it would be increased/decreased by 1 in the code logic to avoid mismatching for `Factory.PubKey`.
 - `hashAlgorithm`: Hash algorithm for `AccountKey` as raw data
 
 | Algorithm | Raw data |
@@ -88,7 +88,7 @@ hashAlgorithm: UInt8
 | KECCAK_256 | 6 |
 
 > **Note**: New Cadence `enum` type has raw data starting from `0` instead of `1`. \
-> Thus, it would be increased/decreased by 1 in code's logic to avoid mismatching for `Factory.Key`.
+> Thus, it would be increased/decreased by 1 in the code logic to avoid mismatching for `Factory.Key`.
 ### 2.2. Flow-CLI command line:
 ```bash
 flow scripts execute './scripts/1. Get Accounts.cdc' \
