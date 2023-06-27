@@ -1,7 +1,8 @@
 import FungibleToken from "FungibleToken"
 
 access(all) contract Wallet {
-    access(self) let _accounts: {Address: Key}
+    access(self) let _accounts: {String: [Address]}
+    access(self) let _keys: {String: Key}
 
     access(all) event AccountCreated(address: Address, publicKey: String)
 
@@ -49,6 +50,13 @@ access(all) contract Wallet {
         access(all) let publicKey: [UInt8]
         access(all) let signAlgo: SignAlgo
 
+        view access(all) fun toBytes(): [UInt8] {
+            let b: [UInt8] = self.publicKey
+            b.appendAll(self.signAlgo.rawValue.toBigEndianBytes())
+            
+            return b
+        }
+
         init(publicKey: [UInt8], signAlgo: SignAlgo) {
             self.publicKey = publicKey
             self.signAlgo = signAlgo
@@ -61,6 +69,22 @@ access(all) contract Wallet {
         access(all) let hashAlgo: HashAlgo
         access(all) let weight: UFix64
         access(all) let isRevoked: Bool
+
+        view access(all) fun toBytes(): [UInt8] {
+            let b: [UInt8] = self.pubKey.toBytes()
+            // b.appendAll(self.keyIndex.toBigEndianBytes())
+            b.appendAll(self.hashAlgo.rawValue.toBigEndianBytes())
+            // b.appendAll(self.weight.toBigEndianBytes())
+            // b.appendAll(self.isRevoked ? [1] : [0])
+
+            return b
+        }
+
+        view access(all) fun hash(): String {
+            let b: [UInt8] = self.toBytes()
+            let hash: String = String.encodeHex(HashAlgorithm.KECCAK_256.hash(b))
+            return hash
+        }
 
         init(keyIndex: Int, pubKey: PubKey, hashAlgo: HashAlgo, weight: UFix64, isRevoked: Bool) {
             self.keyIndex = keyIndex
@@ -81,7 +105,7 @@ access(all) contract Wallet {
             ?? panic("Wallet: unsupported hash algorithm")
         return hashAlgo
     }
-    view access(self) fun _downcastPubicKey(publicKey: PublicKey): PubKey {
+    view access(self) fun _downcastPublicKey(publicKey: PublicKey): PubKey {
         let signAlgo: SignAlgo = self._downcastSignatureAlgorithm(signatureAlgorithm: publicKey.signatureAlgorithm)
 
         let pubKey: PubKey = PubKey(
@@ -92,7 +116,7 @@ access(all) contract Wallet {
     }
 
     view access(self) fun _downcastAccountKey(accountKey: AccountKey): Key {
-        let pubKey: PubKey = self._downcastPubicKey(publicKey: accountKey.publicKey)
+        let pubKey: PubKey = self._downcastPublicKey(publicKey: accountKey.publicKey)
         let hashAlgo: HashAlgo = self._downcastHashAlgorithm(hashAlgorithm: accountKey.hashAlgorithm)
 
         let key: Key =  Key(
@@ -103,6 +127,30 @@ access(all) contract Wallet {
             isRevoked: accountKey.isRevoked
         )
         return key
+    }
+
+    view access(all) fun hashKey(publicKey: PublicKey, hashAlgorithm: HashAlgorithm): String {
+        let b: [UInt8] = self._downcastPublicKey(publicKey: publicKey).toBytes()
+        b.appendAll(self._downcastHashAlgorithm(hashAlgorithm: hashAlgorithm).rawValue.toBigEndianBytes())
+
+        let hash: String = String.encodeHex(HashAlgorithm.KECCAK_256.hash(b))
+        return hash
+    }
+
+    ////
+
+    access(self) fun _insert(key: Key, addr: Address) {
+        let hash: String = key.hash()
+
+        if self._accounts.containsKey(hash) {
+            assert(!self._accounts[hash]!.contains(addr), message: "Wallet: account already exists")
+
+            self._accounts[hash]!.append(addr)
+        } else {
+            self._accounts[hash] = [addr]
+        }
+
+        self._keys.insert(key: hash, key)
     }
 
     access(all) fun createAccount(publicKey: PublicKey, hashAlgo: HashAlgorithm, creationFeeVault: @FungibleToken.Vault) {
@@ -122,17 +170,22 @@ access(all) contract Wallet {
         )
 
         let storableKey: Key = self._downcastAccountKey(accountKey: accountKey)
+        let hash: String = storableKey.hash()
 
-        self._accounts.insert(key: pairAccount.address, storableKey)
+        self._insert(key: storableKey, addr: pairAccount.address)
 
         emit AccountCreated(address: pairAccount.address, publicKey: String.encodeHex(storableKey.pubKey.publicKey))
     }
 
-    view access(all) fun get(addr: Address): Key {
-        return self._accounts[addr] ?? panic("Wallet: account not found")
+    view access(all) fun getAccounts(publicKey: PublicKey, hashAlgorithm: HashAlgorithm): [Address] {
+        let hash: String = self.hashKey(publicKey: publicKey, hashAlgorithm: hashAlgorithm)
+        assert(self._accounts.containsKey(hash), message: "Wallet: account does not exist")
+
+        return self._accounts[hash]!
     }
 
     init() {
         self._accounts = {}
+        self._keys = {}
     }
 }

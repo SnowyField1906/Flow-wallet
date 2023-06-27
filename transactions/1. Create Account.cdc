@@ -7,7 +7,9 @@ transaction(publicKey: String, signatureAlgorithm: UInt8, hashAlgorithm: UInt8, 
     let _hashAlgorithm: HashAlgorithm
 
     prepare(auth: AuthAccount) {
-        let _signatureAlgorithm: SignatureAlgorithm = SignatureAlgorithm(signatureAlgorithm + 1) ?? panic("Invalid signature raw value")
+        let _signatureAlgorithm: SignatureAlgorithm = SignatureAlgorithm(signatureAlgorithm + 1)
+            ?? panic("Invalid signature raw value")
+            
         self._publicKey = PublicKey(
             publicKey: publicKey.decodeHex(),
             signatureAlgorithm: _signatureAlgorithm

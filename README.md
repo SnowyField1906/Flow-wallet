@@ -13,9 +13,11 @@ flow transactions send './transactions/1. Create Account.cdc' \
 
 #### Get Key
 ```bash
-flow scripts execute './scripts/1. Get Key.cdc' \
+flow scripts execute './scripts/1. Get Accounts.cdc' \
 --network testnet \
 --args-json '[
-    {"type": "Address", "value": "0xb941442fdd844a30"}
+   {"type": "String", "value": "2ca8f4e4d35917a25f909f738b114201468b2ea0b60ebe2cdd9b6ed3eb25717340e12ac97fbf4efa66f3f45f4673127c9d9f717e40ee4c0aac1dea42ae9db3e4"},
+    {"type": "UInt8", "value": "0"},
+    {"type": "UInt8", "value": "0"}
 ]'
 ```
