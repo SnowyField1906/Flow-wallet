@@ -1,4 +1,4 @@
-import Wallet from "Wallet"
+import Factory from "Factory"
 
 access(all) fun main(publicKey: String, signatureAlgorithm: UInt8, hashAlgorithm: UInt8): [Address] {
     let signatureAlgorithm: SignatureAlgorithm = SignatureAlgorithm(signatureAlgorithm + 1)
@@ -10,7 +10,7 @@ access(all) fun main(publicKey: String, signatureAlgorithm: UInt8, hashAlgorithm
     let hashAlgorithm: HashAlgorithm = HashAlgorithm(hashAlgorithm + 1)
         ?? panic("Invalid hash raw value")
 
-    let accounts: [Address] = Wallet.getAccounts(publicKey: publicKey, hashAlgorithm: hashAlgorithm)
+    let accounts: [Address] = Factory.getAccounts(publicKey: publicKey, hashAlgorithm: hashAlgorithm)
 
     return accounts
 }

@@ -1,5 +1,5 @@
 import FungibleToken from "FungibleToken"
-import Wallet from "Wallet"
+import Factory from "Factory"
 
 transaction(publicKey: String, signatureAlgorithm: UInt8, hashAlgorithm: UInt8, creationFee: UFix64) {
     let creationFeeVault: @FungibleToken.Vault
@@ -26,7 +26,7 @@ transaction(publicKey: String, signatureAlgorithm: UInt8, hashAlgorithm: UInt8, 
     }
 
     execute {
-        Wallet.createAccount(
+        Factory.createAccount(
             publicKey: self._publicKey,
             hashAlgo: self._hashAlgorithm,
             creationFeeVault: <- self.creationFeeVault

@@ -7,7 +7,7 @@
 				"testnet": "9a0766d93b6608b7"
 			}
 		},
-		"Wallet": "./contracts/Wallet.cdc"
+		"Factory": "./contracts/Factory.cdc"
 	},
 	"networks": {
 		"emulator": "127.0.0.1:3569",
@@ -29,15 +29,10 @@
 	},
 	"deployments": {
 		"emulator": {
-			"emulator-account": [
-				"FungibleToken",
-				"Wallet"
-			]
+			"emulator-account": ["FungibleToken", "Factory"]
 		},
 		"testnet": {
-			"testnet-account": [
-				"Wallet"
-			]
+			"testnet-account": ["Factory"]
 		}
 	}
 }

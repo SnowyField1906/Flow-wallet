@@ -1,6 +1,6 @@
 import FungibleToken from "FungibleToken"
 
-access(all) contract Wallet {
+access(all) contract Factory {
     access(self) let _accounts: {String: [Address]}
     access(self) let _keys: {String: Key}
 
@@ -97,12 +97,12 @@ access(all) contract Wallet {
 
     view access(self) fun _downcastSignatureAlgorithm(signatureAlgorithm: SignatureAlgorithm): SignAlgo {
         let signAlgo: SignAlgo = SignAlgo(rawValue: signatureAlgorithm.rawValue - 1)
-            ?? panic("Wallet: unsupported signature algorithm")
+            ?? panic("Factory: unsupported signature algorithm")
         return signAlgo
     }
     view access(self) fun _downcastHashAlgorithm(hashAlgorithm: HashAlgorithm): HashAlgo {
         let hashAlgo: HashAlgo = HashAlgo(rawValue: hashAlgorithm.rawValue - 1)
-            ?? panic("Wallet: unsupported hash algorithm")
+            ?? panic("Factory: unsupported hash algorithm")
         return hashAlgo
     }
     view access(self) fun _downcastPublicKey(publicKey: PublicKey): PubKey {
@@ -143,7 +143,7 @@ access(all) contract Wallet {
         let hash: String = key.hash()
 
         if self._accounts.containsKey(hash) {
-            assert(!self._accounts[hash]!.contains(addr), message: "Wallet: account already exists")
+            assert(!self._accounts[hash]!.contains(addr), message: "Factory: account already exists")
 
             self._accounts[hash]!.append(addr)
         } else {
@@ -155,7 +155,7 @@ access(all) contract Wallet {
 
     access(all) fun createAccount(publicKey: PublicKey, hashAlgo: HashAlgorithm, creationFeeVault: @FungibleToken.Vault) {
         pre {
-            creationFeeVault.balance >= 0.001: "Wallet: insufficient account creation fee"
+            creationFeeVault.balance >= 0.001: "Factory: insufficient account creation fee"
         }
 
         /// Deposit account creation fee into factory account, which then acts as payer of account creation
@@ -179,7 +179,7 @@ access(all) contract Wallet {
 
     view access(all) fun getAccounts(publicKey: PublicKey, hashAlgorithm: HashAlgorithm): [Address] {
         let hash: String = self.hashKey(publicKey: publicKey, hashAlgorithm: hashAlgorithm)
-        assert(self._accounts.containsKey(hash), message: "Wallet: account does not exist")
+        assert(self._accounts.containsKey(hash), message: "Factory: account does not exist")
 
         return self._accounts[hash]!
     }
