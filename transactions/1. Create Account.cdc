@@ -7,14 +7,14 @@ transaction(publicKey: String, signatureAlgorithm: UInt8, hashAlgorithm: UInt8, 
     let _hashAlgorithm: HashAlgorithm
 
     prepare(auth: AuthAccount) {
-        let _signatureAlgorithm: SignatureAlgorithm = SignatureAlgorithm(signatureAlgorithm + 1)
+        let _signatureAlgorithm: SignatureAlgorithm = SignatureAlgorithm(signatureAlgorithm)
             ?? panic("Invalid signature raw value")
             
         self._publicKey = PublicKey(
             publicKey: publicKey.decodeHex(),
             signatureAlgorithm: _signatureAlgorithm
         )
-        self._hashAlgorithm = HashAlgorithm(hashAlgorithm + 1) ?? panic("Invalid hash raw value")
+        self._hashAlgorithm = HashAlgorithm(hashAlgorithm) ?? panic("Invalid hash raw value")
 
         self.creationFeeVault <- auth.borrow<&FungibleToken.Vault>(from: /storage/flowTokenVault)
             ?.withdraw(amount: creationFee)
