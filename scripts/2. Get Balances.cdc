@@ -15,7 +15,7 @@ access(all) fun main(address: Address, balancePaths: [PublicPath]): {String: UFi
                 let pathStr: String = path.toString()
                 balances.insert(key: pathStr.slice(from: 8, upTo: pathStr.length), balanceRef.balance)
             }
-            
+
             return true
         })
     } else {
@@ -23,7 +23,7 @@ access(all) fun main(address: Address, balancePaths: [PublicPath]): {String: UFi
             let ref: &AnyResource{FungibleToken.Balance} = getAccount(address)
                 .getCapability<&{FungibleToken.Balance}>(balancePath).borrow() ?? panic("Could not borrow balance reference")
 
-            balances.insert(key: balancePath, ref.balance)
+            balances.insert(key: balancePath.toString(), ref.balance)
         }
     }
 
