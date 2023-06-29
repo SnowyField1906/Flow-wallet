@@ -1,5 +1,12 @@
 {
 	"contracts": {
+		"Factory": "./contracts/Factory.cdc",
+		"FiatToken": {
+			"source": "./contracts/tokens/FiatToken.cdc",
+			"aliases": {
+				"testnet": "a983fecbed621163"
+			}
+		},
 		"FungibleToken": {
 			"source": "./contracts/interfaces/FungibleToken.cdc",
 			"aliases": {
@@ -7,7 +14,19 @@
 				"testnet": "9a0766d93b6608b7"
 			}
 		},
-		"Factory": "./contracts/Factory.cdc"
+		"FUSD": {
+			"source": "./contracts/tokens/FUSD.cdc",
+			"aliases": {
+				"testnet": "e223d8a629e49c68"
+			}
+		},
+		"OnChainMultiSig": {
+			"source": "./contracts/libraries/OnChainMultiSig.cdc",
+			"aliases": {
+				"testnet": "983fecbed621163"
+			}
+		},
+		"TokenInfo": "./contracts/libraries/TokenInfo.cdc"
 	},
 	"networks": {
 		"emulator": "127.0.0.1:3569",
@@ -29,10 +48,17 @@
 	},
 	"deployments": {
 		"emulator": {
-			"emulator-account": ["FungibleToken", "Factory"]
+			"emulator-account": [
+				"Factory",
+				"FiatToken",
+				"FUSD",
+				"FungibleToken",
+				"TokenInfo",
+				"OnChainMultiSig"
+			]
 		},
 		"testnet": {
-			"testnet-account": ["Factory"]
+			"testnet-account": ["Factory", "TokenInfo"]
 		}
 	}
 }
