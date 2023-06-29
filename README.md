@@ -116,10 +116,10 @@ flow transactions send './transactions/2. Setup Official Tokens.cdc' \
 ### 3.1. Arguments
 
 ```js
-tokens: [TokenInfo.Full]
+tokens: [Token.Full]
 ```
 
-- `tokens`: List of tokens to be setup, following the `TokenInfo.Full` structure
+- `tokens`: List of tokens to be setup, following the `Token.Full` structure
 
 ### 3.2. Flow-CLI command line
 
@@ -134,7 +134,7 @@ flow transactions send './transactions/3. Setup Tokens.cdc' \
       {
         "type": "Struct",
         "value": {
-          "id": "A.7e014e862b346f8e.TokenInfo.Full",
+          "id": "A.7e014e862b346f8e.Token.Full",
           "fields": [
             {
               "name": "address",

@@ -1,9 +1,9 @@
 import FungibleToken from "FungibleToken"
 import Factory from "Factory"
-import TokenInfo from "TokenInfo"
+import Token from "Token"
 
 /// @params tokens: [[tokenAddress, contractName, vaultPath, receivefPath, balancePath]]
-transaction(tokens: [TokenInfo.Full]) {
+transaction(tokens: [Token.Full]) {
     prepare(auth: AuthAccount) {
         for i, token in tokens {
             let contractRef: &FungibleToken = getAccount(token.address).contracts.borrow<&FungibleToken>(name: token.contractName)!

@@ -26,7 +26,7 @@
 				"testnet": "0983fecbed621163"
 			}
 		},
-		"TokenInfo": "./contracts/libraries/TokenInfo.cdc"
+		"Token": "./contracts/libraries/Token.cdc"
 	},
 	"networks": {
 		"emulator": "127.0.0.1:3569",
@@ -53,15 +53,12 @@
 				"FiatToken",
 				"FUSD",
 				"FungibleToken",
-				"TokenInfo",
+				"Token",
 				"OnChainMultiSig"
 			]
 		},
 		"testnet": {
-			"testnet-account": [
-				"Factory",
-				"TokenInfo"
-			]
+			"testnet-account": ["Factory", "Token"]
 		}
 	}
 }
