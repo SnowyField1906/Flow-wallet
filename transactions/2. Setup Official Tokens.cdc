@@ -1,6 +1,6 @@
 import FungibleToken from "FungibleToken"
-import FUSD from 0xe223d8a629e49c68
-import FiatToken from 0xa983fecbed621163
+import FUSD from "FUSD"
+import FiatToken from "FiatToken"
 
 transaction() {
     prepare(auth: AuthAccount) {
