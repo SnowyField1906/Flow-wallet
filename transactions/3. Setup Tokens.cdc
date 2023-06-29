@@ -14,5 +14,7 @@ transaction(tokens: [TokenInfo.Full]) {
                 auth.link<&FungibleToken.Vault{FungibleToken.Balance}>(token.balancePath, target: token.vaultPath)
             }
         }
+
+
     }
 }

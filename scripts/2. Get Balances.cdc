@@ -1,4 +1,5 @@
 import FungibleToken from "FungibleToken"
+import TokenInfo from "TokenInfo"
 
 access(all) fun main(address: Address, balancePaths: [PublicPath]): {String: UFix64} {
     let balances: {String: UFix64} = {}
@@ -10,10 +11,11 @@ access(all) fun main(address: Address, balancePaths: [PublicPath]): {String: UFi
             if typeIden.slice(from: typeIden.length - 23, upTo: typeIden.length - 2) == "FungibleToken.Balance" {
                 let balanceRef: &AnyResource{FungibleToken.Balance} = getAccount(address)
                     .getCapability<&AnyResource{FungibleToken.Balance}>(path)
-                    .borrow() ?? panic("Could not borrow balance reference")
+                    .borrow()
+                    ?? panic("Could not borrow balance reference")
                 
-                let pathStr: String = path.toString()
-                balances.insert(key: pathStr.slice(from: 8, upTo: pathStr.length), balanceRef.balance)
+                let pathIden: String = TokenInfo.parseString(path: path)
+                balances.insert(key: pathIden, balanceRef.balance)
             }
 
             return true
@@ -21,9 +23,12 @@ access(all) fun main(address: Address, balancePaths: [PublicPath]): {String: UFi
     } else {
         for balancePath in balancePaths {
             let ref: &AnyResource{FungibleToken.Balance} = getAccount(address)
-                .getCapability<&{FungibleToken.Balance}>(balancePath).borrow() ?? panic("Could not borrow balance reference")
-
-            balances.insert(key: balancePath.toString(), ref.balance)
+                .getCapability<&{FungibleToken.Balance}>(balancePath)
+                .borrow()
+                ?? panic("Could not borrow balance reference")
+    
+            let pathIden: String = TokenInfo.parseString(path: balancePath)
+            balances.insert(key: pathIden, ref.balance)
         }
     }
 

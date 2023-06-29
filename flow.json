@@ -1,5 +1,11 @@
 {
 	"contracts": {
+		"FUSD": {
+			"source": "./contracts/tokens/FUSD.cdc",
+			"aliases": {
+				"testnet": "e223d8a629e49c68"
+			}
+		},
 		"Factory": "./contracts/Factory.cdc",
 		"FiatToken": {
 			"source": "./contracts/tokens/FiatToken.cdc",
@@ -14,16 +20,10 @@
 				"testnet": "9a0766d93b6608b7"
 			}
 		},
-		"FUSD": {
-			"source": "./contracts/tokens/FUSD.cdc",
-			"aliases": {
-				"testnet": "e223d8a629e49c68"
-			}
-		},
 		"OnChainMultiSig": {
 			"source": "./contracts/libraries/OnChainMultiSig.cdc",
 			"aliases": {
-				"testnet": "983fecbed621163"
+				"testnet": "0983fecbed621163"
 			}
 		},
 		"TokenInfo": "./contracts/libraries/TokenInfo.cdc"
@@ -58,7 +58,10 @@
 			]
 		},
 		"testnet": {
-			"testnet-account": ["Factory", "TokenInfo"]
+			"testnet-account": [
+				"Factory",
+				"TokenInfo"
+			]
 		}
 	}
 }
