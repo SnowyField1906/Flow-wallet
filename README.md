@@ -120,6 +120,42 @@ flow transactions send './transactions/3. Setup USDC.cdc' \
 --args-json '[]'
 ```
 
+## 4. Transfer Token
+
+### 4.1. Arguments
+
+```js
+to: Address
+amount: UFix64
+vaultPath: StoragePath
+receiverPath: PublicPath
+```
+
+- `to`: The recipient address
+- `amount`: The amount of token to transfer
+- `vaultPath`: The Vault Capability's path of the token
+- `receiverPath`: The Receiver Capability's path of the token
+
+### 4.2. Flow-CLI command line
+
+```bash
+flow transactions send './cadence/transactions/tokens/3. Transfer Token.cdc' \
+  --signer testnet-account \
+  --network testnet \
+  --args-json '[
+    { "type": "Address", "value": "0xd84327a2b08fd2b1" },
+    { "type": "UFix64", "value": "0.1" },
+    {
+      "type": "Path",
+      "value": { "domain": "storage", "identifier": "usdcVault" }
+    },
+    {
+      "type": "Path",
+      "value": { "domain": "public", "identifier": "usdcReceiver" }
+    }
+  ]'
+```
+
 # III. Scripts
 
 ## 1. Get Accounts
