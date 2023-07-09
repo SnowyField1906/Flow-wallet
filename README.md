@@ -102,75 +102,22 @@ flow transactions send './transactions/1. Create Account.cdc' \
 ]'
 ```
 
-## 2. Setup official tokens
+## 2. Setup FUSD Vault
 
 ```bash
-flow transactions send './transactions/2. Setup Official Tokens.cdc' \
+flow transactions send './transactions/2. Setup FUSD.cdc' \
 --signer testnet-account \
 --network testnet \
 --args-json '[]'
 ```
 
-## 3. Setup tokens
-
-### 3.1. Arguments
-
-```js
-tokens: [Token.Full]
-```
-
-- `tokens`: List of tokens to be setup, following the `Token.Full` structure
-
-### 3.2. Flow-CLI command line
+## 3. Setup USDC Vault
 
 ```bash
-flow transactions send './transactions/3. Setup Tokens.cdc' \
+flow transactions send './transactions/3. Setup USDC.cdc' \
 --signer testnet-account \
 --network testnet \
---args-json '[
-  {
-    "type": "Array",
-    "value": [
-      {
-        "type": "Struct",
-        "value": {
-          "id": "A.7e014e862b346f8e.Token.Full",
-          "fields": [
-            {
-              "name": "address",
-              "value": { "type": "Address", "value": "0xe223d8a629e49c68" }
-            },
-            {
-              "name": "contractName",
-              "value": { "type": "String", "value": "FiatToken" }
-            },
-            {
-              "name": "vaultPath",
-              "value": {
-                "type": "Path",
-                "value": { "domain": "storage", "identifier": "usdcVault" }
-              }
-            },
-            {
-              "name": "receiverPath",
-              "value": {
-                "type": "Path",
-                "value": { "domain": "public", "identifier": "usdcReceiver" }
-              }
-            },
-            {
-              "name": "balancePath",
-              "value": {
-                "type": "Path",
-                "value": { "domain": "public", "identifier": "usdcBalance" }
-              }
-            }
-          ]
-        }
-      }
-    ]
-  }
-]'
+--args-json '[]'
 ```
 
 # III. Scripts
@@ -210,7 +157,7 @@ hashAlgorithm: UInt8
 
 > **Note**: New Cadence `enum` type has raw data starting from `0` instead of `1`. \
 > Thus, it would be increased/decreased by 1 in the code logic to avoid mismatching for `Factory.Key`.
->
+
 ### 1.2. Flow-CLI command line
 
 ```bash
